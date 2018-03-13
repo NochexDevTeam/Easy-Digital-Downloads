@@ -362,6 +362,21 @@ function nochex_apc() {
 }
 add_action( 'init', 'nochex_apc' );
 
+/**
+ * Add Gateway subsection
+ *
+ * @since 1.0.1
+ * @param array  $sections Gateway subsections
+ *
+ * @return array
+ */
+function nochex_settings_section( $sections ) {
+	$sections['nochex'] = __( 'Nochex', 'nochex' );
+
+	return $sections;
+}
+add_filter( 'edd_settings_sections_gateways', 'nochex_settings_section' , 10, 1 );
+
 function nochex_add_settings($settings) {
  
 	$nochex_settings = array(
@@ -410,6 +425,10 @@ function nochex_add_settings($settings) {
 			'type' => 'checkbox'
 		)
 	);
+	
+	if ( version_compare( EDD_VERSION, 2.5, '>=' ) ) {
+		$nochex_settings = array( 'nochex' => $nochex_settings );
+	}
  
 	return array_merge($settings, $nochex_settings);	
 }
