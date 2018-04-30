@@ -3,7 +3,7 @@
 Plugin Name: Nochex Payment Gateway for Easy Digital Downloads
 Plugin URI: https://github.com/NochexDevTeam/Easy-Digital-Downloads
 Description: Accept Nochex Payments in Easy Digital Downloads.
-Version: 1.1
+Version: 1.2
 Author: Nochex Ltd
 License: GPL2
 */
@@ -51,24 +51,29 @@ function nochex_failed_page_form() {
 }
 
 function edd_nochex_remove_cc_form() {
-	ob_start(); ?>
+	ob_start();
+	
+	$user_id = get_current_user_id();		
+	$address = get_user_meta( $user_id );
+	
+	 ?>
 	<fieldset>
 		<legend><?php _e('Billing Address', 'nochex'); ?></legend>
 		<p>
 			<label class="edd-label"><?php _e('Billing Address Line 1', 'nochex'); ?></label>		
-			<input type="text" name="edd_address" class="edd-address edd-input required" placeholder="<?php _e('Address', 'nochex'); ?>"/>
+			<input type="text" name="edd_address" class="edd-address edd-input required" autocomplete='address-line1' value="<?php echo $address["billing_address_1"][0]; ?>" placeholder="<?php _e('Address', 'nochex'); ?>"/>
 		</p>
 		<p>
 			<label class="edd-label"><?php _e('Billing City', 'nochex'); ?></label>		
-			<input type="text" name="edd_city" class="edd-city edd-input required" placeholder="<?php _e('City', 'nochex'); ?>"/>
+			<input type="text" name="edd_city" class="edd-city edd-input required" autocomplete='address-level2' value="<?php echo $address["billing_city"][0]; ?>" placeholder="<?php _e('City', 'nochex'); ?>"/>
 		</p>
 		<p>
 			<label class="edd-label"><?php _e('Billing Postcode', 'nochex'); ?></label>		
-			<input type="text" name="edd_zip" class="edd-zip edd-input required" placeholder="<?php _e('Zip/Postcode', 'nochex'); ?>"/>
+			<input type="text" name="edd_zip" class="edd-zip edd-input required" autocomplete='postal-code' value="<?php echo $address["billing_postcode"][0]; ?>" placeholder="<?php _e('Zip/Postcode', 'nochex'); ?>"/>
 		</p>
 		<p>
 			<label class="edd-label"><?php _e('Phone Number', 'nochex'); ?></label>
-			<input type="text" name="edd_phone" class="edd-phone edd-input required" placeholder="<?php _e('Phone', 'nochex'); ?>"/>
+			<input type="text" name="edd_phone" class="edd-phone edd-input required" value="<?php echo $address["billing_phone"][0]; ?>" placeholder="<?php _e('Phone', 'nochex'); ?>"/>
 		</p>		
 		<img src="<?php echo plugins_url('images/clear-amex-mp.png', __FILE__ ); ?>" style="max-width:300px;" />
 	</fieldset>		
@@ -98,18 +103,8 @@ function nochex_process_payment($purchase_data) {
     // check there is a gateway name
     if ( ! isset( $purchase_data['post_data']['edd-gateway'] ) )
     return;
-    // collect payment data
-    $payment_data = array( 
-        'price'         => $purchase_data['price'], 
-        'date'          => $purchase_data['date'], 
-        'user_email'    => $purchase_data['user_email'], 
-        'purchase_key'  => $purchase_data['purchase_key'], 
-        'downloads'     => $purchase_data['downloads'], 
-        'user_info'     => $purchase_data['user_info'], 
-        'cart_details'  => $purchase_data['cart_details'], 
-        'status'        => 'pending'
-     );		
-	 
+    // collect payment data	 	
+	
 	 /* User Data */	
 	 $email_address = validateInput($purchase_data['post_data']['edd_email'], "email");			
 	 $billing_first_name = validateInput($purchase_data['post_data']['edd_first'], "text");	
@@ -118,13 +113,12 @@ function nochex_process_payment($purchase_data) {
 	 $billing_city = validateInput($purchase_data['post_data']['edd_city'], "text");	 	 	
 	 $billing_postcode = validateInput($purchase_data['post_data']['edd_zip'], "text");	
 	 $phone_number = validateInput($purchase_data['post_data']['edd_phone'], "text");		
-	 
 	 /* URLs */	
 	 $returnurl = validateInput(add_query_arg( 'payment-confirmation', 'nochex', get_permalink( $edd_options['success_page'] ) ), "url");		
 	 $cancel_page_id = get_option( 'edd_cancel_page' );	
 	 $cancelurl = validateInput(get_permalink( $cancel_page_id ), "url");
 	 $callback_url = validateInput(trailingslashit(home_url()).'?nochex=apc', "url");	
-	 
+
     if (!$billing_first_name)
 		edd_set_error( 'invalid_edd_first', __('First Name is not entered.', 'nochex') );
     if (!$billing_last_name)
@@ -136,12 +130,31 @@ function nochex_process_payment($purchase_data) {
     if (!$billing_postcode)
 		edd_set_error( 'invalid_edd_zip', __('PostCode is not entered.', 'nochex') );
     if (!$phone_number)
-		edd_set_error( 'invalid_edd_phone', __('Phone Number is not entered.', 'nochex') );	$errors = edd_get_errors();
-		
+		edd_set_error( 'invalid_edd_phone', __('Phone Number is not entered.', 'nochex') );					$errors = edd_get_errors();
+	
 	if ( $errors ) {
         // problems? send back
 		edd_send_back_to_checkout('?payment-mode=' . $purchase_data['post_data']['edd-gateway']);
-    }else{
+    }else{		
+ 	
+	$purchase_data['user_info'] = array(
+										'address' => array(
+										'line1' => $billing_address_line,
+										'city' => $billing_city,
+										'zip' => $billing_postcode,
+										)
+										);				
+   
+ $payment_data = array( 
+        'price'         => $purchase_data['price'], 
+        'date'          => $purchase_data['date'], 
+        'user_email'    => $purchase_data['user_email'], 
+        'purchase_key'  => $purchase_data['purchase_key'], 
+        'downloads'     => $purchase_data['downloads'], 
+        'user_info'     => $purchase_data['user_info'], 
+        'cart_details'  => $purchase_data['cart_details'], 
+        'status'        => 'pending'
+     );		
 	    // record the pending payment
     	$payment = edd_insert_payment( $payment_data );		
 	    // check payment
@@ -245,7 +258,9 @@ function nochex_process_payment($purchase_data) {
 add_action('edd_gateway_nochex', 'nochex_process_payment');
 function nochex_apc() {
 
-	$checkAPC = esc_html($_GET['nochex']);
+if(isset($_REQUEST['nochex'])){
+
+	$checkAPC = esc_html($_REQUEST['nochex']);
 	$checkAPC = sanitize_text_field($checkAPC);
 
 	if ($checkAPC == 'apc') {
@@ -283,13 +298,11 @@ function nochex_apc() {
 								
 		$checkStatus = esc_html($_POST['transaction_status']);
 		$checkStatus = sanitize_text_field($isCallback);
-		 
 		if ($checkStatus == "100"){
 			$status = " TEST";
 		}else{
 			$status = " LIVE";
 		}
-		
 	    if (!is_wp_error($response) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) { 
 		    $payment_meta = get_post_meta($checkOrderId, '_edd_payment_meta', true );				
 		    if (strtolower($response['body']) == strtolower('AUTHORISED')) {  			    
@@ -304,7 +317,6 @@ function nochex_apc() {
 		}	
 		
 	}else{
-		
 		$urlencoded = "";
 		foreach ($_POST as $Index => $Value)
 		$urlencoded .= urlencode($Index) . "=" . urlencode($Value) . "&";
@@ -323,11 +335,8 @@ function nochex_apc() {
 								
 		$checkStatus = esc_html($_POST['status']);
 		$checkStatus = sanitize_text_field($isCallback);
-									
 	    if (!is_wp_error($response) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) { 		
-		
-		    $payment_meta = get_post_meta($checkOrderId, '_edd_payment_meta', true );	
-				
+		$payment_meta = get_post_meta($checkOrderId, '_edd_payment_meta', true );	
 		    if (strtolower($response['body']) == strtolower('AUTHORISED')) {  			    
 				edd_update_payment_status($checkOrderId, 'publish');				
 				$orderNotes = "Payment has been " . strtolower($response['body']) . " for order " . $checkOrderId . ", and this was a " . $checkStatus . " transaction, the transaction id for this order is " . $checkTranId;		
@@ -340,19 +349,17 @@ function nochex_apc() {
 			}
 		}
 	}	
+	}
 }
 add_action( 'init', 'nochex_apc' );
 
 // registers the gateway and display on Payment Gateways Default Home
 function nochex_register_gateway2($gateways) {
     global $edd_options;
-	
 	$gateways['nochex'] = array('admin_label' => 'Nochex', 'checkout_label' => "Credit / Debit Card (Nochex)");
 	return $gateways;
 }
 add_filter('edd_payment_gateways', 'nochex_register_gateway2');
-
-
 // Creates a Tab and assigned all the Nochex Settings / Variables
 function nochex_register_gateway($gateway_sections) {
 	$gateway_sections['nochex'] = __( 'Nochex', 'easy-digital-downloads' );	 
@@ -376,7 +383,6 @@ function nochex_add_settings($gateway_settings) {
 				'size' => 'regular',
 			), 
 		);
-	
 	$nochex_settings_api = array(		
 		array(
 			'id' => 'nochex_display_name',
@@ -410,8 +416,6 @@ function nochex_add_settings($gateway_settings) {
 			'type' => 'checkbox'
 		)
 	);	
-	
-	/*$gateway_settings, */
 	$nochex_settings = array_merge($nochex_settings, $nochex_settings_api);	
 	$nochex_settings = apply_filters( 'edd_nochex_settings', $nochex_settings );		
 	$gateway_settings['nochex'] = $nochex_settings;
