@@ -53,6 +53,14 @@ __*You can select Nochex from the dropdown menu to make it the default gateway, 
 
 == Changelog ==
 
+= 1.2 =
+
+* Update *
+
+- Bug fixes for billing address / invoice details to be shown on the Payment History details, and APC fixes.
+- Extra Validation 
+- Pre-fill address fields if user logged in.
+
 = 1.1 =
 
 * Update *
