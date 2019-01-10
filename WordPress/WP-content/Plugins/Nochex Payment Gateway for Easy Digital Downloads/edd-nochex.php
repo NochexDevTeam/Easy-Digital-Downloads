@@ -138,11 +138,25 @@ function nochex_process_payment($purchase_data) {
     }else{		
  	
 	$purchase_data['user_info'] = array(
+
+										'id' => $purchase_data["user_info"]["id"],
+										
+										'first_name' => $billing_first_name,
+										
+										'last_name' => $billing_last_name,
+										
+										'email' => $email_address,
+										
 										'address' => array(
+
 										'line1' => $billing_address_line,
+
 										'city' => $billing_city,
+
 										'zip' => $billing_postcode,
+
 										)
+
 										);				
    
  $payment_data = array( 
