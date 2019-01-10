@@ -54,7 +54,11 @@ __*You can select the radio button next to this option to make it the default ga
 
 == Changelog ==
 
-= 1.1 =
+= 1.3 =
+
+- Minor update - fixed missing user data
+
+= 1.2 =
 
 * Update *
 
