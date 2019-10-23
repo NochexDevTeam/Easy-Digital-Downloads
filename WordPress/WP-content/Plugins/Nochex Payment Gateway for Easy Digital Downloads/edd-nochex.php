@@ -75,7 +75,7 @@ function edd_nochex_remove_cc_form() {
 			<label class="edd-label"><?php _e('Phone Number', 'nochex'); ?></label>
 			<input type="text" name="edd_phone" class="edd-phone edd-input required" value="<?php echo $address["billing_phone"][0]; ?>" placeholder="<?php _e('Phone', 'nochex'); ?>"/>
 		</p>		
-		<img src="<?php echo plugins_url('images/clear-amex-mp.png', __FILE__ ); ?>" style="max-width:300px;" />
+		<img src="<?php echo plugins_url('images/clear-mp.png', __FILE__ ); ?>" style="max-width:300px;" />
 	</fieldset>		
 	<?php
 	echo ob_get_clean();
