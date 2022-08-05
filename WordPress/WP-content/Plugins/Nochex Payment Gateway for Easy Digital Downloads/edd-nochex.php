@@ -3,7 +3,7 @@
 Plugin Name: Nochex Payment Gateway for Easy Digital Downloads
 Plugin URI: https://github.com/NochexDevTeam/Easy-Digital-Downloads
 Description: Accept Nochex Payments in Easy Digital Downloads.
-Version: 1.3
+Version: 1.4
 Author: Nochex Ltd
 License: GPL2
 */
@@ -191,7 +191,7 @@ function nochex_process_payment($purchase_data) {
 		$description .= "Item Name: " . $purchase_data['cart_details'][$i]['name'] . ", Item Price: ".  number_format($purchase_data['cart_details'][$i]['price'], 2, '.', '' ) . " Quantity Ordered: " .  $purchase_data['cart_details'][$i]['quantity'];	
 	}
 	}
-			if (edd_get_option( 'nochex_test', false ) == 1){			
+			if (edd_is_test_mode()){			
 				$nochexTest = "100";
 			}else{
 				$nochexTest = "0";
@@ -405,12 +405,12 @@ function nochex_add_settings($gateway_settings) {
 			'type' => 'text',
 			'size' => 'regular'
 		), 
-		array(
+		/*array(
 			'id' => 'nochex_test',
 			'name' => __('Test Transaction', 'nochex'),
 			'desc' => __('Testing Mode, Used to test that your shopping cart is working. Leave disabled for live transactions.', 'nochex'),
 			'type' => 'checkbox'
-		),
+		),*/
 		array(
 			'id' => 'nochex_hide',
 			'name' => __('Hide Billing Details', 'nochex'),

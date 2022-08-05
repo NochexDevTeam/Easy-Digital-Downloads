@@ -2,14 +2,14 @@
 Contributors: Nochex 
 Tags: Easy Digital Downloads, Credit Cards, Shopping Cart, Nochex Payment Gateway, Nochex, Extension, Gateway
 Requires at least: 3.3
-Tested up to: 5.0.3
-Stable tag: 2.0
+Tested up to: 6.0.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Accept all major credit cards directly on your Easy Digital Downloads site using the Nochex payment gateway.
 
-Easy Digital Downloads Version Tested up to 2.9.x and WordPress 5.0.3
+Easy Digital Downloads Version Tested up to 3.0.2.1 and WordPress 6.0.1
 
 == Description ==
 = Nochex Online Payment Services =
@@ -39,20 +39,28 @@ it easy for your customers to use and for you to get paid, and we back that up w
 * Click on the sub tab for "Nochex".
 * Configure your Nochex Gateway settings. See below for details.
 
-= Connect to WooCommerce =
-To configure the plugin, go to **WooCommerce > Settings** from the left hand menu, then the top tab "Payment Gateways". You should see __" Nochex"__ as an option at the top of the screen. 
+= Connect to Easy Digital Downloads =
+To configure the plugin, go to **Downloads > Settings** from the left hand menu, then the top tab "Payment". You should see __" Nochex"__ as an option at the top of the screen. 
 __*You can select the radio button next to this option to make it the default gateway.*__
 
 * ** Enable/Disable ** - check the box to enable Nochex.
 * ** Payment Display Name ** - allows you to determine what your customers will see this payment option as on the checkout page.  
 * ** Nochex Merchant ID or Email Address ** - enter your Nochex account email address or Merchant ID. 
 * ** Hide Billing Details ** - optional feature, if enabled the billing address details will be hidden when the customer is sent to Nochex.
-* ** Detailed Product Information ** - optional feature, if enabled allows your product details to be displayed in a structured format on your Nochex Payment Page.
-* ** Test Transaction ** - check to enable Nochex test mode, uncheck to enable LIVE transactions.   
+* ** Detailed Product Information ** - optional feature, if enabled allows your product details to be displayed in a structured format on your Nochex Payment Page.  
 * ** Callback ** - To use the callback functionality, please contact Nochex Support to enable this functionality on your merchant account otherwise this function wont work.
 * ** Save Changes.** 
 
+* To test the module, go to **Downloads > Settings** from the left hand menu, then the top tab "Payment". You should see __" General"__ as an option at the top of the screen.
+* Then enable test mode by checking the Enabled box.
+
+*** When you are ready to take payments, ensure test mode has been disabled ***
+
 == Changelog ==
+
+= 1.4 =
+
+- Change to test mode feature
 
 = 1.3 =
 
