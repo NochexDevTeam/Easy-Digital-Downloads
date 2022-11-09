@@ -1,4 +1,4 @@
-=== WooCommerce Payment Gateway - Nochex ===
+=== Easy Digital Downloads Payment Gateway - Nochex ===
 Contributors: Nochex 
 Tags: Easy Digital Downloads, Credit Cards, Shopping Cart, Nochex Payment Gateway, Nochex, Extension, Gateway
 Requires at least: 3.3
