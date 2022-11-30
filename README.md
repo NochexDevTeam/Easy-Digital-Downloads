@@ -1,15 +1,16 @@
 === Easy Digital Downloads Payment Gateway - Nochex ===
+
 Contributors: Nochex 
 Tags: Easy Digital Downloads, Credit Cards, Shopping Cart, Nochex Payment Gateway, Nochex, Extension, Gateway
 Requires at least: 3.3
-Tested up to: 6.0.1
+Tested up to: 6.1.1
 Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Accept all major credit cards directly on your Easy Digital Downloads site using the Nochex payment gateway.
 
-Easy Digital Downloads Version Tested up to 3.0.2.1 and WordPress 6.0.1
+Easy Digital Downloads Version Tested up to 3.1.0.3 and WordPress 6.1.1
 
 == Description ==
 = Nochex Online Payment Services =
