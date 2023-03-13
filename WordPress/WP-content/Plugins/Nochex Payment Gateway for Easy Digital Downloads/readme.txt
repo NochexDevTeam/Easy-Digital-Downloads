@@ -9,7 +9,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Accept all major credit cards directly on your Easy Digital Downloads site using the Nochex payment gateway.
 
-Easy Digital Downloads Version Tested up to 3.0.2.1 and WordPress 6.0.1
+Easy Digital Downloads Version Tested up to 3.1.0.6 and WordPress 6.0.1
 
 == Description ==
 = Nochex Online Payment Services =
@@ -57,6 +57,10 @@ __*You can select the radio button next to this option to make it the default ga
 *** When you are ready to take payments, ensure test mode has been disabled ***
 
 == Changelog ==
+
+= 1.4.1 =
+
+- Made small change to APC page
 
 = 1.4 =
 
