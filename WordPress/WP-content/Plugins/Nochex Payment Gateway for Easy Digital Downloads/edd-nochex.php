@@ -3,7 +3,7 @@
 Plugin Name: Nochex Payment Gateway for Easy Digital Downloads
 Plugin URI: https://github.com/NochexDevTeam/Easy-Digital-Downloads
 Description: Accept Nochex Payments in Easy Digital Downloads.
-Version: 1.4
+Version: 1.4.1
 Author: Nochex Ltd
 License: GPL2
 */
