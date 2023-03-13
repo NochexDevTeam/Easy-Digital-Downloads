@@ -335,7 +335,7 @@ if(isset($_REQUEST['nochex'])){
 		foreach ($_POST as $Index => $Value)
 		$urlencoded .= urlencode($Index) . "=" . urlencode($Value) . "&";
 		$urlencoded = substr($urlencoded,0,-1);				
-		$response = wp_remote_post('https://www.nochex.com/apcnet/apc.aspx', array(
+		$response = wp_remote_post('https://secure.nochex.com/apc/apc.aspx', array(
 								'method' => 'POST',
 								'timeout' => 45,
 								'redirection' => 5,
